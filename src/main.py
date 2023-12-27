@@ -24,7 +24,7 @@ def index():
 def index():
     return [{"hosts": "info"}]
 
-@app.put("/api/hosts", summary="Update host", tags=['Hosts'])
+@app.put("/api/hosts/{host_id}", summary="Update host", tags=['Hosts'])
 def index():
     return [{"hosts": "info"}]
 
