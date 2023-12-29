@@ -1,3 +1,7 @@
+# Services/{hostname}/Contracts
+hostname
+services: [{servicename: telegraf, port: 9126},{servicename: node_exporter, port: 9100}]
+
 # Services
 servicename telegraf|node_exporter|windows_exporter
 host_id 1,2,3,4,5
@@ -12,3 +16,10 @@ type    app/data
 # Backup
 host_id
 type
+
+
+# Versioning
+api/v1/hosts
+api/v1/hosts/{hostname}
+
+

@@ -31,7 +31,7 @@ async def get_all_hosts(db: db_dependency):
     for host, team in hosts:
         result.append({"host_id": host.id,"hostname": host.hostname, "main_service": host.main_service, "environment": host.environment, "owner_team": team.teamname,"owner_email": host.owner_email })
     
-    return sorted(result)
+    return result
 
 @router.get("/api/hosts/{host_id}", status_code=status.HTTP_200_OK, tags=['Hosts'])
 async def get_host(db: db_dependency, host_id: int = Path(gt=0)):
