@@ -15,6 +15,6 @@ class Teams(Base):
     __tablename__ = 'teams'
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String)
+    teamname = Column(String)
     when_changed = Column(String)
     when_created = Column(String)

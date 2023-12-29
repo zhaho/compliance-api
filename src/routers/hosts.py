@@ -37,14 +37,25 @@ async def get_host(db: db_dependency, host_id: int = Path(gt=0)):
 
 @router.post("/api/hosts", status_code=status.HTTP_201_CREATED, tags=['Hosts'])
 async def create_host(db: db_dependency, host_request: HostRequest):
+    # Convert all string fields to lowercase
+    for field_name, field_value in host_request.dict().items():
+        if isinstance(field_value, str):
+            setattr(host_request, field_name, field_value.lower())
+
+    # Add and commit to the database
     host_model = Hosts(**host_request.model_dump())
     db.add(host_model)
     db.commit()
 
 @router.put("/api/hosts/{host_id}", status_code=status.HTTP_204_NO_CONTENT, tags=['Hosts'])
-async def update_host(db: db_dependency, host_request: HostRequest,
-                      host_id: int = Path(gt=0)):
+async def update_host(db: db_dependency, host_request: HostRequest,host_id: int = Path(gt=0)):
+    # Convert all string fields to lowercase
+    for field_name, field_value in host_request.dict().items():
+        if isinstance(field_value, str):
+            setattr(host_request, field_name, field_value.lower())
 
+    # Add and commit to the database
+    
     host_model = db.query(Hosts).filter(Hosts.id == host_id).first()
     if host_model is None:
         raise HTTPException(status_code=404, detail='Host not found.')
