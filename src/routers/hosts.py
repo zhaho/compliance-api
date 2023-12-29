@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, HTTPException, Path
 from starlette import status
-from src.models import Hosts
+from src.models import Hosts, Teams
 from src.database import SessionLocal
 
 router = APIRouter()
@@ -26,13 +26,22 @@ class HostRequest(BaseModel):
 
 @router.get("/api/hosts", status_code=status.HTTP_200_OK, tags=['Hosts'])
 async def get_all_hosts(db: db_dependency):
-    return db.query(Hosts).all()
+    hosts = db.query(Hosts, Teams).join(Teams, Hosts.team_id == Teams.id).all()
+    result = []
+    for host, team in hosts:
+        result.append({"host_id": host.id,"hostname": host.hostname, "main_service": host.main_service, "environment": host.environment, "owner_team": team.teamname,"owner_email": host.owner_email })
+    
+    return sorted(result)
 
 @router.get("/api/hosts/{host_id}", status_code=status.HTTP_200_OK, tags=['Hosts'])
 async def get_host(db: db_dependency, host_id: int = Path(gt=0)):
-    host_model = db.query(Hosts).filter(Hosts.id == host_id).first()
-    if host_model is not None:
-        return host_model
+    hosts = db.query(Hosts, Teams).join(Teams, Hosts.team_id == Teams.id).filter(Hosts.id == host_id).all()
+    if len(hosts) != 0:
+        result = []
+        for host, team in hosts:
+            result.append({"host_id": host.id,"hostname": host.hostname, "main_service": host.main_service, "environment": host.environment, "owner_team": team.teamname,"owner_email": host.owner_email })
+    
+        return sorted(result)
     raise HTTPException(status_code=404, detail='Host not found.')
 
 @router.post("/api/hosts", status_code=status.HTTP_201_CREATED, tags=['Hosts'])
@@ -55,7 +64,6 @@ async def update_host(db: db_dependency, host_request: HostRequest,host_id: int 
             setattr(host_request, field_name, field_value.lower())
 
     # Add and commit to the database
-    
     host_model = db.query(Hosts).filter(Hosts.id == host_id).first()
     if host_model is None:
         raise HTTPException(status_code=404, detail='Host not found.')
