@@ -8,6 +8,8 @@ class Hosts(Base):
     hostname = Column(String)
     main_service = Column(String)
     environment = Column(Integer)
+    service_type = Column(Integer)
+    image_type = Column(Integer)
     owner_email = Column(Integer)
     team_id = Column(Integer)
 

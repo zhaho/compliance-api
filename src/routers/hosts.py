@@ -22,6 +22,8 @@ class HostRequest(BaseModel):
     main_service: str = Field(min_length=1)
     environment: str = Field(min_length=1)
     owner_email: str = Field(min_length=9)
+    service_type: str = Field(min_length=3)
+    image_type: str = Field(min_length=3)
     team_id: int = Field(gt=0)
 
 @router.get("/api/v1/hosts", status_code=status.HTTP_200_OK, tags=['Hosts'])
@@ -29,7 +31,7 @@ async def get_all_hosts(db: db_dependency):
     hosts = db.query(Hosts, Teams).join(Teams, Hosts.team_id == Teams.id).all()
     result = []
     for host, team in hosts:
-        result.append({"host_id": host.id,"hostname": host.hostname, "main_service": host.main_service, "environment": host.environment, "owner_team": team.teamname,"owner_email": host.owner_email })
+        result.append({"host_id": host.id,"hostname": host.hostname, "main_service": host.main_service, "environment": host.environment, "owner_team": team.teamname, "service_type": host.service_type, "image_type": host.image_type, "owner_email": host.owner_email })
     
     return result
 
@@ -39,7 +41,7 @@ async def get_host(db: db_dependency, host_id: int = Path(gt=0)):
     if len(hosts) != 0:
         result = []
         for host, team in hosts:
-            result.append({"host_id": host.id,"hostname": host.hostname, "main_service": host.main_service, "environment": host.environment, "owner_team": team.teamname,"owner_email": host.owner_email })
+            result.append({"host_id": host.id,"hostname": host.hostname, "main_service": host.main_service, "environment": host.environment, "owner_team": team.teamname, "service_type": host.service_type, "image_type": host.image_type, "owner_email": host.owner_email })
     
         return sorted(result)
     raise HTTPException(status_code=404, detail='Host not found.')
@@ -72,6 +74,8 @@ async def update_host(db: db_dependency, host_request: HostRequest,host_id: int 
     host_model.main_service = host_request.main_service
     host_model.environment = host_request.environment
     host_model.owner_email = host_request.owner_email
+    host_model.service_type = host_request.service_type
+    host_model.image_type = host_request.image_type
     host_model.team_id = host_request.team_id
 
     db.add(host_model)

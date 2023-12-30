@@ -1,5 +1,5 @@
-# Services/{hostname}/Contracts
-hostname
+# Services/
+service_name
 services: [{servicename: telegraf, port: 9126},{servicename: node_exporter, port: 9100}]
 
 # Services
@@ -10,6 +10,8 @@ port 9126|9100|9186
 # Hosts
 image linux/oracle/windows
 type    app/data
+
+# hosts/{hostname}/contracts
 
 # Backup
 host_id
