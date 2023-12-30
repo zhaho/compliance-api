@@ -24,3 +24,9 @@ After that you can startup everything with
 docker-compose up
 ```
 
+# How to use the API
+
+1. Create a team
+2. Create hosts related to that team
+3. Create services related to that host
+

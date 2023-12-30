@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS teams;
+--DROP TABLE IF EXISTS teams;
 
 CREATE TABLE IF NOT EXISTS teams (
 	id SERIAL,
@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS teams (
 	PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS hosts;
+--DROP TABLE IF EXISTS hosts;
 
 CREATE TABLE IF NOT EXISTS hosts (
 	id SERIAL,
@@ -23,5 +23,13 @@ CREATE TABLE IF NOT EXISTS hosts (
 	FOREIGN KEY (team_id) REFERENCES teams(id)
 );
 
-DROP TABLE IF EXISTS services;
+--DROP TABLE IF EXISTS services;
 
+CREATE TABLE services (
+	id SERIAL,
+	servicename varchar(40) DEFAULT NULL,
+	port INT DEFAULT NULL,
+	host_id INT DEFAULT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY (host_id) REFERENCES hosts(id)
+);
