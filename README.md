@@ -18,8 +18,7 @@
 
 ```bash
 git clone https://github.com/zhaho/compliance-api.git
-cd compliance-api && cp src/assets/_remove_.env ./.env
-# Edit .env as your liking
+cd compliance-api && cp src/assets/_remove_.env ./.env # Edit .env as your liking
 docker-compose up
 ```
 
