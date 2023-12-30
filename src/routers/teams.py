@@ -22,19 +22,19 @@ class TeamRequest(BaseModel):
     when_changed: str = Field(min_length=1)
     when_created: str = Field(min_length=1)
 
-@router.get("/api/teams", status_code=status.HTTP_200_OK, tags=['Teams'])
+@router.get("/api/v1/teams", status_code=status.HTTP_200_OK, tags=['Teams'])
 async def get_all_teams(db: db_dependency):
     return db.query(Teams).all()
 
 
-@router.get("/api/teams/{team_id}", status_code=status.HTTP_200_OK, tags=['Teams'])
+@router.get("/api/v1/teams/{team_id}", status_code=status.HTTP_200_OK, tags=['Teams'])
 async def get_team(db: db_dependency, team_id: int = Path(gt=0)):
     team_model = db.query(Teams).filter(Teams.id == team_id).first()
     if team_model is not None:
         return team_model
     raise HTTPException(status_code=404, detail='Team not found.')
 
-@router.post("/api/teams", status_code=status.HTTP_201_CREATED, tags=['Teams'])
+@router.post("/api/v1/teams", status_code=status.HTTP_201_CREATED, tags=['Teams'])
 async def create_team(db: db_dependency, team_request: TeamRequest):
     # Convert all string fields to lowercase
     for field_name, field_value in team_request.dict().items():
@@ -46,7 +46,7 @@ async def create_team(db: db_dependency, team_request: TeamRequest):
     db.add(team_model)
     db.commit()
 
-@router.put("/api/teams/{team_id}", status_code=status.HTTP_204_NO_CONTENT, tags=['Teams'])
+@router.put("/api/v1/teams/{team_id}", status_code=status.HTTP_204_NO_CONTENT, tags=['Teams'])
 async def update_team(db: db_dependency, team_request: TeamRequest, team_id: int = Path(gt=0)):
     # Convert all string fields to lowercase
     for field_name, field_value in team_request.dict().items():
@@ -64,7 +64,7 @@ async def update_team(db: db_dependency, team_request: TeamRequest, team_id: int
     db.add(team_model)
     db.commit()
 
-@router.delete("/api/teams/{team_id}", status_code=status.HTTP_204_NO_CONTENT, tags=['Teams'])
+@router.delete("/api/v1/teams/{team_id}", status_code=status.HTTP_204_NO_CONTENT, tags=['Teams'])
 async def delete_team(db: db_dependency, team_id: int = Path(gt=0)):
     team_model = db.query(Teams).filter(Teams.id == team_id).first()
     if team_model is None:

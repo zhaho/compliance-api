@@ -24,7 +24,7 @@ class HostRequest(BaseModel):
     owner_email: str = Field(min_length=9)
     team_id: int = Field(gt=0)
 
-@router.get("/api/hosts", status_code=status.HTTP_200_OK, tags=['Hosts'])
+@router.get("/api/v1/hosts", status_code=status.HTTP_200_OK, tags=['Hosts'])
 async def get_all_hosts(db: db_dependency):
     hosts = db.query(Hosts, Teams).join(Teams, Hosts.team_id == Teams.id).all()
     result = []
@@ -33,7 +33,7 @@ async def get_all_hosts(db: db_dependency):
     
     return result
 
-@router.get("/api/hosts/{host_id}", status_code=status.HTTP_200_OK, tags=['Hosts'])
+@router.get("/api/v1/hosts/{host_id}", status_code=status.HTTP_200_OK, tags=['Hosts'])
 async def get_host(db: db_dependency, host_id: int = Path(gt=0)):
     hosts = db.query(Hosts, Teams).join(Teams, Hosts.team_id == Teams.id).filter(Hosts.id == host_id).all()
     if len(hosts) != 0:
@@ -44,7 +44,7 @@ async def get_host(db: db_dependency, host_id: int = Path(gt=0)):
         return sorted(result)
     raise HTTPException(status_code=404, detail='Host not found.')
 
-@router.post("/api/hosts", status_code=status.HTTP_201_CREATED, tags=['Hosts'])
+@router.post("/api/v1/hosts", status_code=status.HTTP_201_CREATED, tags=['Hosts'])
 async def create_host(db: db_dependency, host_request: HostRequest):
     # Convert all string fields to lowercase
     for field_name, field_value in host_request.dict().items():
@@ -56,7 +56,7 @@ async def create_host(db: db_dependency, host_request: HostRequest):
     db.add(host_model)
     db.commit()
 
-@router.put("/api/hosts/{host_id}", status_code=status.HTTP_204_NO_CONTENT, tags=['Hosts'])
+@router.put("/api/v1/hosts/{host_id}", status_code=status.HTTP_204_NO_CONTENT, tags=['Hosts'])
 async def update_host(db: db_dependency, host_request: HostRequest,host_id: int = Path(gt=0)):
     # Convert all string fields to lowercase
     for field_name, field_value in host_request.dict().items():
@@ -77,7 +77,7 @@ async def update_host(db: db_dependency, host_request: HostRequest,host_id: int 
     db.add(host_model)
     db.commit()
 
-@router.delete("/api/hosts/{host_id}", status_code=status.HTTP_204_NO_CONTENT, tags=['Hosts'])
+@router.delete("/api/v1/hosts/{host_id}", status_code=status.HTTP_204_NO_CONTENT, tags=['Hosts'])
 async def delete_host(db: db_dependency, host_id: int = Path(gt=0)):
     host_model = db.query(Hosts).filter(Hosts.id == host_id).first()
     if host_model is None:

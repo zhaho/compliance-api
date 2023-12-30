@@ -11,15 +11,6 @@ port 9126|9100|9186
 image linux/oracle/windows
 type    app/data
 
-# Teams
-
 # Backup
 host_id
 type
-
-
-# Versioning
-api/v1/hosts
-api/v1/hosts/{hostname}
-
-
