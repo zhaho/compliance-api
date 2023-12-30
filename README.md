@@ -16,15 +16,14 @@
 
 # Run
 
-In order to run the compliance-api you will need to first clone the repository, and then create an .env file in the root folder of the repo, in order to set up the user and passwords for the services in docker-compose.yml. (There is a template of how the .env should look like in src/assets folder)
-
-After that you can startup everything with
-
 ```bash
+git clone https://github.com/zhaho/compliance-api.git
+cd compliance-api && cp src/assets/_remove_.env ./.env
+# Edit .env as your liking
 docker-compose up
 ```
 
-# How to use the API
+# How to use the Compliance-API
 
 1. Create a team
 2. Create hosts related to that team
