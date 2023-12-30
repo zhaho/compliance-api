@@ -9,9 +9,9 @@
 
 * Simple overview of all your hosts in your environment.
 
-# Prerequisite
+# Prerequisites
 
-* Docker
+* Git
 * Docker Compose
 
 # Run
