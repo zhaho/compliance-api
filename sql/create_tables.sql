@@ -36,24 +36,24 @@ CREATE TABLE IF NOT EXISTS exporters (
 	FOREIGN KEY (host_id) REFERENCES hosts(id)
 );
 
-CREATE TABLE IF NOT EXISTS locations {
+CREATE TABLE IF NOT EXISTS locations (
 	id SERIAL,
 	locationname varchar(40) DEFAULT NULL,
 	PRIMARY KEY (id)
-}
+);
 
-CREATE TABLE IF NOT EXISTS environments {
+CREATE TABLE IF NOT EXISTS environments (
 	id SERIAL,
 	environmentname varchar(40) DEFAULT NULL,
 	PRIMARY KEY (id)
-}
+);
 
 
-CREATE TABLE IF NOT EXISTS backup_types {
+CREATE TABLE IF NOT EXISTS backup_types (
 	id SERIAL,
 	backup_name varchar(40) DEFAULT NULL,
 	PRIMARY KEY (id)
-}
+);
 	
 CREATE TABLE IF NOT EXISTS api_users (
     user_id SERIAL,

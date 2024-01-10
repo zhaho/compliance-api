@@ -4,7 +4,8 @@ services:
   app:
     build: .
     container_name: compliance-api-app
-    command: uvicorn src.main:app --host 0.0.0.0 --port 15400 --reload
+    #command: uvicorn src.main:app --host 0.0.0.0 --port 15400 --reload
+    command: ["./wait-for-it.sh", "db:5432", "--", "uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "15400", "--reload"]
     ports:
       - 8000:15400
     volumes:
