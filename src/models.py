@@ -21,10 +21,10 @@ class Teams(Base):
     when_changed = Column(String)
     when_created = Column(String)
 
-class Services(Base):
-    __tablename__ = 'services'
+class Exporters(Base):
+    __tablename__ = 'exporters'
 
     id = Column(Integer, primary_key=True, index=True)
-    servicename = Column(String)
+    exportername = Column(String)
     port = Column(Integer)
     host_id = Column(Integer)

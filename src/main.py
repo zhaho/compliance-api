@@ -4,7 +4,7 @@ from pydantic import BaseModel, Field
 from starlette import status
 from src.database import engine
 import src.models
-from src.routers import hosts, teams, services
+from src.routers import hosts, teams, exporters
 
 app = FastAPI(
     title="Compliance-API",
@@ -20,4 +20,4 @@ src.models.Base.metadata.create_all(bind=engine)
 
 app.include_router(hosts.router)
 app.include_router(teams.router)
-app.include_router(services.router)
+app.include_router(exporters.router)
