@@ -1,6 +1,3 @@
-
-
-
 # What is Compliance-API?
 
 *Compliance-API for seamless tracking and management of compliance hosts through a versatile set of endpoints, allowing CRUD operations and detailed filtering based on services, environments, owners, and teams.*
@@ -21,6 +18,8 @@ git clone https://github.com/zhaho/compliance-api.git
 cd compliance-api && cp src/assets/_remove_.env ./.env # Edit .env as your liking
 docker-compose up
 ```
+
+Access on : http://localhost:8000/docs
 
 # How to use the Compliance-API
 
