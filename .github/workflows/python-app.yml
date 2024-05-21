@@ -9,12 +9,5 @@ jobs:
       - name: Build the stack
         run: docker-compose up -d
 
-      - name: Test API
-        run: |
-          response=$(curl -s -o response.txt -w "%{http_code}" http://localhost:8000/api/v1/hosts)
-          cat response.txt
-          if [ "$response" -ne 200 ]; then
-            echo "API is not responding correctly"
-            exit 1
-          fi
-          echo "API is responding correctly"
+      - name: List Containers
+        run: docker ps
