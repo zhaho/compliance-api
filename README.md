@@ -15,7 +15,7 @@
 
 ```bash
 git clone https://github.com/zhaho/compliance-api.git
-cd compliance-api && cp .env.example .env # Edit .env as your liking
+# Edit .env with your choice of credentials
 docker-compose up
 ```
 
