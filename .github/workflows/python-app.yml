@@ -11,7 +11,7 @@ jobs:
 
       - name: Test API
         run: |
-          response=$(curl -s -o response.txt -w "%{http_code}" http://your-api-endpoint.com/health)
+          response=$(curl -s -o response.txt -w "%{http_code}" http://localhost:8000/api/v1/hosts)
           cat response.txt
           if [ "$response" -ne 200 ]; then
             echo "API is not responding correctly"
