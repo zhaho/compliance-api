@@ -9,5 +9,12 @@ jobs:
       - name: Build the stack
         run: docker-compose up -d
 
-      - name: Verify GET hosts
-        run: curl -s localhost:8000/api/v1/hosts
+      - name: Test API
+        run: |
+          response=$(curl -s -o response.txt -w "%{http_code}" http://your-api-endpoint.com/health)
+          cat response.txt
+          if [ "$response" -ne 200 ]; then
+            echo "API is not responding correctly"
+            exit 1
+          fi
+          echo "API is responding correctly"
